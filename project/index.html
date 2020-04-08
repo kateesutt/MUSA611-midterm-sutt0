@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  </head>
+<body>
+<div id = "sidebar" style="position: absolute;
+left: 0;
+top: 0;
+width: 400px;
+height: 100%">
+  <h1 id = "title"> Title </h1>
+  <p id = "description"> a description </p>
+  <button id="nextButton"> next </button>
+</div>
+
+<div id="map" style=
+"position: absolute; top:0; height: 100%; right:0; left: 400">
+
+<h1> I'm a map</h1>
+
+<!-- google jquery cdn copy the first thing??? -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+  <!-- slide model: -->
+  <!-- //title -->
+  <!-- bus line -->
+  <!-- bus stop name -->
+  <!-- description of what is interesting -->
+<script>
+
+var slides = [
+  {title: "High Ridership Stops",
+  route: "58",
+  stop name: "FTC",
+  description: "some routes have one stop with 5x the average ridership. a common reason for this
+  would be a transportation center where many people transfer from the bus to the train"},
+  {title: "Even Distribution of Ridership", description: "second", color: "#FF00FF"},
+  {title: "title3", description: "third", color: "#0000FF"}
+]
+
+or
+var midtermSlide1 = {
+filter: function(feat) { //return true or fale for this feat},
+title,
+etc
+]
+
+var currentSlide = 0
+
+var loadSlide(slide) {
+//change page
+$('#title').text(slide.title)
+$('#description').text(slide.description)
+$('#sidebar').css("background-color", slide.color)
+}
+
+var next = function() {
+  if (currentSlide == slides.length -1) {
+} else {
+$('#nextButton').show()
+currentSlide = currentSlide +1
+loadSlide(slides[currentSlide])
+}
+if (currentSlide == slides.length -1) {
+$('#nextButton').hide()
+}
+
+
+$('#nextButton').click(function(e) {
+//needs to load the next slide
+next()
+});
+
+script
+
+</body>
+</html>
