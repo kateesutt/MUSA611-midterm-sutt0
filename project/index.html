@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="leaflet.css" />
   </head>
 <body>
-<div id = "sidebar" style="position: absolute;
-left: 0;
-top: 0;
-width: 400px;
-height: 100%">
+<div id = "sidebar" style="position: absolute; left: 0; top: 0; width: 200px; height: 100%">
   <h1 id = "title"> Title </h1>
   <p id = "description"> a description </p>
   <button id="nextButton"> next </button>
 </div>
 
-<div id="map" style=
-"position: absolute; top:0; height: 100%; right:0; left: 400">
+<div id="map" style="position: absolute; top:0; height: 100%; right:0; left: 200"></div>
 
-<h1> I'm a map</h1>
-
+<!-- <h1> I'm a map</h1> -->
+<script src="leaflet.js"></script>
+<!-- <script src="main.js"></script> -->
 <!-- google jquery cdn copy the first thing??? -->
+<script>
+  var map = L.map('map', {
+    center: [39.9522, -75.1639],
+    zoom: 14
+  });
+  var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    subdomains: 'abcd',
+    minZoom: 0,
+    maxZoom: 20,
+    ext: 'png'
+  }).addTo(map);
+    </script>
+
 <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -30,31 +41,36 @@ height: 100%">
   <!-- bus stop name -->
   <!-- description of what is interesting -->
 <script>
-
 var slides = [
-  {title: "High Ridership Stops",
-  route: "58",
-  stop name: "FTC",
-  description: "some routes have one stop with 5x the average ridership. a common reason for this
-  would be a transportation center where many people transfer from the bus to the train"},
-  {title: "Even Distribution of Ridership", description: "second", color: "#FF00FF"},
-  {title: "title3", description: "third", color: "#0000FF"}
-]
-
-or
-var midtermSlide1 = {
-filter: function(feat) { //return true or fale for this feat},
-title,
-etc
+  {title: "Filling in Gaps Left by Rail",
+  route: "60",
+  region: "North Central Philadelphia",
+  description: "Buses provide important movement contra to the direction of our rail lines, eg North-South movement in West Philly and East-West movement on the other side of the Schuykill river. Some of the direct East-West routes in North Philly have the highest bus ridership in the system."},
+  {title: "Servicing Major Suburban Corridors",
+  route: "120",
+  region: "Delaware and Chester County",
+  description: "In suburban counties, buses fan out along major corridors, providing coverage service, connecting people to jobs clustered in suburban office parks, and providing service to some denser places in our suburbs, such as Norristown and Chester.",
+  },
+  {title: "Dense Urban Neighborhoods Unserved by Heavy Rail",
+  route: "18",
+  region: "Northwest Philadelphia",
+  description: "Many dense areas of Philadelphia itself are not served by trains at all. In North Philly, the MFL and BSL both terminate before the city line, leaving large portions of dense urban neighborhoods unserved by rail. At these stations, many riders transfer to buses to complete their trip.
+At Olney Transportation Center, bus ridership is 86% percent of rail ridership."},
+{title: "Bus Ridership Surpasses Rail!",
+route: "58",
+region: "Northeast Philadelphia",
+description: "At Frankford Transportation Center, the terminus of the MFL, bus ridership even outperforms
+rail. Buses saw 37,845 boardings at FTC compared to 34,358 for the MFL."},
 ]
 
 var currentSlide = 0
 
-var loadSlide(slide) {
+var loadSlide = function(slide) {
 //change page
 $('#title').text(slide.title)
+$('#route').text(slide.route)
+$('#region').text(slide.region)
 $('#description').text(slide.description)
-$('#sidebar').css("background-color", slide.color)
 }
 
 var next = function() {
@@ -66,7 +82,7 @@ loadSlide(slides[currentSlide])
 }
 if (currentSlide == slides.length -1) {
 $('#nextButton').hide()
-}
+}}
 
 
 $('#nextButton').click(function(e) {
@@ -74,7 +90,7 @@ $('#nextButton').click(function(e) {
 next()
 });
 
-script
+</script>
 
 </body>
 </html>
