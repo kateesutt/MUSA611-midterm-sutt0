@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--stylesheet imports (these allow us to import and use style definitions from other files)-->
+    <link rel="stylesheet" href="leaflet.css" />
+  </head>
+  <body>
+    <!--left panel-->
+    <div id = "sidebar" style="position: absolute; left: 0px; width: 400px; top: 0; bottom: 0; padding:10px">
+      <h1 id = "title"> Philadelphia Farmer's Markets </h1>
+      <p id = "MarketName"> </p>
+      <p id = "Neighborhood"> </p>
+      <p id = "description"> Philadelphia has 50 farmer's markets! </p>
+      <p id = "zoom"></p>
+      <button id="nextButton"> Next </button>
+      <button id="previousButton"> Previous </button>
+    </div>
+    <!--map-->
+    <div id="map" style="position: absolute; right: 0; left: 400px; top: 0; bottom: 0;"></div>
+
+    <!--javascript imports (these allow us to bring in javascript files we want to take advantage of in our code)-->
+    <script src="leaflet.js"></script>
+    <!--The code below defines and generates the map-->
+    <!--START HERE (note the script tag)-->
+    <script>
+      var map = L.map('map', {
+        center: [39.9522, -75.1639],
+        zoom: 13
+      });
+
+      var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: 'abcd',
+        minZoom: 0,
+        maxZoom: 20,
+        ext: 'png'
+      }).addTo(map);
+
+
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <!-- <script src="../data/routes.js"></script> -->
+
+    <script src="markets.js" type="text/javascript"></script>
+
+    <script> L.geoJson(markets).addTo(map); </script>
+
+    <script>
+      var slides = [
+      {title: "My Farmer's Market", MarketName: "Clark Park Farmer's Market", Neighborhood: "Spruce Hill",
+      description: "I've never actually been to this market, but it is closest to my house. I do hope to go this summer if social distancing eases up. It's open year round!"},
+      {title: "A Market in a Train Station",
+      MarketName: "Frankford Transportation Center Farmer's Market",
+      Neighborhood: "Frankford",
+      description: "There aren't many farmer's markets in Northeast Philadelphia, but you can find this one in the popular transportation hub, Frankford Transportation Center!"},
+      {title: "A Park Named After A Snack",
+      MarketName: "Pretzel Park Farmer's Market",
+      Neighborhood: "Manayunk",
+      description: "Think of Philly's favorite snack when you go to this market at Pretzel Park in Manayunk."},
+      {title: "Thank your CDCs",
+      MarketName: "4th and Lehigh Farmer's Market",
+      Neighborhood: "Fairhill",
+      description: "This market, held in Fairhill Square, is sponsored by the community development corporation, HACE."},
+      {title: "Like Fairmount?",
+      MarketName: "Fairmount Farmer's Market",
+      Neighborhood: "Fairmount",
+      description: "Eastern State Penetentiary is right across the street, so you can get a snack to process your visit."}
+      ]
+
+    var zoomLevels = [[39.9490, -75.2094], [40.0232, -75.0775], [40.026, -75.221], [39.991, -75.138], [39.9673, -75.1740]]
+    var currentSlide = -1
+    var currentZoom = -1
+
+    var loadSlide = function(slide) {
+    //change page
+    $('#title').text(slide.title)
+    $('#MarketName').text(slide.MarketName)
+    $('#Neighborhood').text(slide.Neighborhood)
+    $('#description').text(slide.description)
+    }
+
+    $('#previousButton').hide()
+
+
+    if (currentSlide < 1){
+        $('#previousButton').hide()}
+
+
+    var next = function() {
+      if (currentSlide == slides.length -1) {
+        console.log(currentSlide)
+    } else {
+    $('#nextButton').show()
+    currentSlide = currentSlide +1
+    currentZoom = currentZoom +1
+    loadSlide(slides[currentSlide])
+    map.setView(zoomLevels[currentZoom], 16)
+    $('#previousButton').show()
+    console.log(currentSlide)
+    }
+    if (currentSlide == slides.length -1) {
+      console.log(currentSlide)
+    $('#nextButton').hide()
+    }}
+
+
+    $('#nextButton').click(function(e) {
+    //needs to load the next slide
+      next()
+    });
+
+    var previous = function(){
+      if (currentZoom == 0) {
+        console.log(currentSlide)
+        $('#previousButton').hide()
+      } else {
+        $('#previousButton').show()
+        currentSlide = currentSlide - 1
+        currentZoom = currentZoom - 1
+        loadSlide(slides[currentSlide])
+        map.setView(zoomLevels[currentZoom], 16)
+        console.log(currentSlide)
+        $('#nextButton').show()
+      }
+    }
+
+    $('#previousButton').click(function (e){
+      previous()
+    })
+
+    // var hidePrev = function() {
+    //   if (currentSlide > 0) {
+    //     $('#previousButton').show()
+    //   } else {
+    //     $('#previousButton').hide()
+    //   }
+    // }
+    //
+    // hidePrev()
+
+    </script>
+
+</body>
+</html>
